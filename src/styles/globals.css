@@ -79,11 +79,7 @@
   margin: 0;
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+
 
 body {
   color: rgb(var(--foreground-rgb));
@@ -104,4 +100,29 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+main {
+  padding: 5vw;
+}
+
+.container {
+  position: relative;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+}
+.sketch {
+  width: 1000px;
+  height: 600px;
+  border: 1px solid blue;
+  display: flex;
+  justify-content: center;
+}
+
+#sketch {
+  border: 1px solid #fff;
+  width: 100%;
+  height: 100%;
+
 }
