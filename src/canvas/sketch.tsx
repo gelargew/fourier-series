@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import Sketch from 'react-p5'
 
 export const Fourier = () => {
     const [rendered, isRendered] = useState(false)
