@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { FormEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { atom, useAtom } from 'jotai'
 import { useControls } from 'leva'
 import { imagePathAtom } from '@/lib/store'
 import { precomputeDistances, sortArrayByClosestDistance } from '@/lib/distance'
+import { slugify } from '@/lib/slugify'
 
 const imageDataAtom = atom<ImageData | null>(null)
 
@@ -41,6 +42,9 @@ export type Controls = {
 }
 
 export const ImageInput = () => {
+    const [src, setSrc] = useState(
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREYIWiVJNQRZXmnXy1WU16ygtHRLnI77RQ3A&usqp=CAU',
+    )
     const controls = useControls(defaultValues)
     const {
         green: greenThreeshold,
@@ -127,17 +131,40 @@ export const ImageInput = () => {
         setImageData(imageData)
         grayscale()
     }
+    const addImage = (e: FormEvent<HTMLInputElement>) => {
+        const files = (e.target as HTMLInputElement).files
+        if (files) {
+            const fileURL = URL.createObjectURL(files[0])
+            setSrc(fileURL)
+        }
+    }
 
     return (
         <>
-            <canvas onClick={() => console.log(imagePath)} ref={ref}></canvas>
-            <img
-                ref={imageRef}
-                id='image'
-                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREYIWiVJNQRZXmnXy1WU16ygtHRLnI77RQ3A&usqp=CAU'
-                crossOrigin='anonymous'
-                onLoad={onImageLoad}
-            />
+            {' '}
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <img
+                    ref={imageRef}
+                    id='image'
+                    src={src}
+                    crossOrigin='anonymous'
+                    onLoad={onImageLoad}
+                />
+                <canvas
+                    onClick={() => console.log(imagePath)}
+                    ref={ref}
+                ></canvas>
+                <div>
+                    {/* <label htmlFor='img-upload'>add image</label> */}
+                    <input id='img-upload' type={'file'} onChange={addImage} />
+                </div>
+            </div>
         </>
     )
 }
