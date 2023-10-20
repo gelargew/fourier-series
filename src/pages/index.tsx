@@ -9,6 +9,7 @@ import { ImageInput } from '@/image/ImageInput'
 import { useAtom } from 'jotai'
 import { imagePathAtom } from '@/lib/store'
 import { DrawingInput } from '@/canvas/drawingInput'
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -37,6 +38,14 @@ export default function Home() {
                 />
                 <link rel='icon' href='/favicon.ico' />
             </Head>
+            <header style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '3rem'
+            }} >
+              <Link href='/'>DRAW</Link>
+              <Link href='/image'>IMAGE</Link>
+            </header>
             <main className={`${styles.main} ${inter.className}`}>
 
                 {imagePath && (
